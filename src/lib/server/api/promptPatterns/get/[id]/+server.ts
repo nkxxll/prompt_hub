@@ -1,9 +1,16 @@
+// get by id
 import { json } from "@sveltejs/kit";
 import { db } from "$lib/db";
 import { promptPatterns } from "$lib/schema";
 import { eq } from "drizzle-orm";
 
-export async function GET({ params }) {
+interface Params {
+  params: {
+    id: string 
+  }
+}
+
+export async function GET({ params }: Params) {
   const pattern = await db
     .select()
     .from(promptPatterns)
