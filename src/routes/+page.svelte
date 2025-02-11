@@ -1,6 +1,9 @@
 <script lang="ts">
-     </script>
+	import type { PageProps } from './$types';
 
-<h1>
-  Hello from the new page
-</h1>
+	let { data }: PageProps = $props();
+</script>
+
+{#each data.patterns as pattern}
+  <p>{pattern.name}</p>
+{/each}
