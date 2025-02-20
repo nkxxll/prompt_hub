@@ -1,10 +1,20 @@
 <script lang="ts">
-  import type { PageProps } from "./$types";
   import Table from "$lib/components/Table.svelte";
+  import type { CellClickedEvent } from "ag-grid-community";
+  import {goto} from "$app/navigation";
 
-  let { data }: PageProps = $props();
+  const onPromptClicked = (event: CellClickedEvent) => {
+    const id = event.data.id;
+    goto(`/patterns/${id}`);
+  }
+
+  const { data } = $props();
   const columnDefs = [
-    { field: "id", sortable: true, filter: true },
+    {
+      field: "id",
+      sortable: true,
+      filter: true,
+      onCellClicked: onPromptClicked    },
     { field: "name", sortable: true, filter: true },
     { field: "formatString", sortable: true, filter: true },
     { field: "notes", sortable: true, filter: true },

@@ -11,6 +11,7 @@
       <h1 class="text-lg font-extrabold tracking-widest uppercase">{PUBLIC_APPLICATION_NAME}</h1>
       <nav class="space-x-6">
         <a href="/" class="hover:text-gray-400 transition-colors">Home</a>
+        <a href="/create" class="hover:text-gray-400 transition-colors">Create</a>
         <a href="/about" class="hover:text-gray-400 transition-colors">About</a>
         <a href="/contact" class="hover:text-gray-400 transition-colors">Contact</a>
       </nav>

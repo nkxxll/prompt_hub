@@ -1,8 +1,8 @@
 import { db } from "$lib/server/db";
 import { promptPatterns } from "$lib/server/db/schema";
-import type { PageLoad } from "./$types";
+import type { PageServerLoad } from "./$types";
 
-export const load: PageLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params }) => {
   const patterns = await db.select().from(promptPatterns).all();
   return { patterns };
 };
