@@ -2,7 +2,7 @@
 import { db } from "$lib/server/db";
 import { promptPatterns } from "$lib/server/db/schema";
 import { json, type RequestEvent } from "@sveltejs/kit";
-import { like } from "drizzle-orm";
+import { cosineDistance, like } from "drizzle-orm";
 
 export async function GET(event: RequestEvent) {
   const url = event.url;
@@ -15,7 +15,12 @@ export async function GET(event: RequestEvent) {
   let byFormatString: (typeof promptPatterns.$inferSelect)[] = [];
   let byNotes: (typeof promptPatterns.$inferSelect)[] = [];
 
-  if (name != "") {
+  if (name === "" && llmWebsite === "" && formatString === "" && notes === "") {
+    const res = await db.select().from(promptPatterns).all();
+    return json(res);
+  }
+
+  if (name !== "") {
     byName = await db
       .select()
       .from(promptPatterns)
@@ -23,7 +28,7 @@ export async function GET(event: RequestEvent) {
       .all();
   }
 
-  if (name != "") {
+  if (llmWebsite !== "") {
     byLlmWebsite = await db
       .select()
       .from(promptPatterns)
@@ -31,7 +36,7 @@ export async function GET(event: RequestEvent) {
       .all();
   }
 
-  if (name != "") {
+  if (formatString !== "") {
     byFormatString = await db
       .select()
       .from(promptPatterns)
@@ -39,7 +44,7 @@ export async function GET(event: RequestEvent) {
       .all();
   }
 
-  if (name != "") {
+  if (notes !== "") {
     byNotes = await db
       .select()
       .from(promptPatterns)

@@ -1,25 +1,18 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
   import { llmWebsites, promptCategories } from "$lib";
+  const { data } = $props();
+  const pattern = data.pattern!;
 
-  // test
-  const userId = 1;
-
-  function navHome() {
-    goto("/");
-  }
 </script>
 
-<h1 class="mb-6 text-2xl font-semibold text-gray-800 dark:text-gray-100">
-  Create New Prompt Pattern
-</h1>
-
-<form method="POST" onsubmit={navHome}>
+<form method="POST">
+  <input type="hidden" name="id" value={pattern.id}/>
   <label class="block text-lg font-medium text-gray-700 dark:text-gray-300">
     Name
     <input
       type="text"
       name="name"
+      value={pattern.name}
       class="mt-2 w-full rounded-md border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
       required
     />
@@ -29,6 +22,7 @@
     Format String
     <textarea
       name="formatString"
+      value={pattern.formatString}
       class="mt-2 w-full rounded-md border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
       rows="5"
       required
@@ -40,6 +34,7 @@
     <input
       type="url"
       name="llmWebsite"
+      value={pattern.llmWebsite}
       class="mt-2 w-full rounded-md border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
       list="urls"
     />
@@ -54,6 +49,7 @@
     >Notes
     <textarea
       name="notes"
+      value={pattern.notes}
       class="mt-2 w-full rounded-md border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
     ></textarea>
   </label>
@@ -64,34 +60,23 @@
       name="category"
       class="mt-2 w-full rounded-md border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
     >
-      <option value="None" selected>Select a Category</option>
+      <option value={pattern.category} disabled>Select a Category</option>
       {#each promptCategories as category}
         <option value={category}>{category}</option>
       {/each}
     </select>
   </label>
 
-  <!-- Public Status Field -->
   <label class="block text-lg font-medium text-gray-700 dark:text-gray-300"
     >Public
-    <input type="checkbox" class="rounded-md" name="public" />
+    <input type="checkbox" checked={pattern.public} class="rounded-md" name="public" />
   </label>
 
-  <!-- User ID Field -->
-  <label>
-    <input
-      type="hidden"
-      class="mt-2 w-full rounded-md border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-      value={userId}
-      name="userId"
-    />
-  </label>
+  <input type="hidden" value={pattern.userId} name="userId" />
 
-  <!-- Submit Button -->
   <button
-    type="submit"
     class="w-full rounded-md bg-blue-500 p-2 text-white shadow-md transition duration-300 hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
   >
-    Create Prompt Pattern
+    Save Changes
   </button>
 </form>

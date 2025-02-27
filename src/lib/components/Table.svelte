@@ -43,7 +43,7 @@
 
   const gridOptions: GridOptions = {
     columnDefs,
-    rowData: data,
+    rowData: $data,
     rowSelection: "single",
     defaultColDef: {
       resizable: true,
@@ -54,7 +54,11 @@
 
   onMount(() => {
     gridApi = createGrid(gridElement, gridOptions);
+
+    data.subscribe(() => {
+      gridApi.setGridOption("rowData", $data);
+    });
   });
 </script>
 
-<div bind:this={gridElement} class="w-full rounded-xl ag-theme-alpine" style="height: 80vh"></div>
+<div bind:this={gridElement} class="ag-theme-alpine w-full rounded-xl" style="height: 70vh"></div>
