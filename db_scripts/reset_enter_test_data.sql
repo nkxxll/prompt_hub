@@ -1,12 +1,12 @@
-DELETE FROM users;
+DELETE FROM user;
 -- Reset auto-increment values
 DELETE FROM sqlite_sequence WHERE name='users';
 
 -- Insert users
-INSERT INTO users (id, email, username, created_at, updated_at) VALUES
-(1, 'user1@example.com', 'user1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2, 'user2@example.com', 'user2', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(3, 'user3@example.com', 'user3', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO user (id, username, password_hash) VALUES
+(1, 'user1', 'password'),
+(2, 'user2', 'password'),
+(3, 'user3', 'password');
 
 -- Clear prompt_patterns table
 DELETE FROM prompt_patterns;
