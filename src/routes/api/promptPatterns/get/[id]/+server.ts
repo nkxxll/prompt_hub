@@ -1,20 +1,19 @@
-// get by id
-import { json } from "@sveltejs/kit";
+import { redirect, json, type RequestEvent } from "@sveltejs/kit";
 import { db } from "$lib/server/db";
 import { promptPatterns } from "$lib/server/db/schema";
 import { eq } from "drizzle-orm";
 
-interface Params {
-  params: {
-    id: string 
+export async function GET(event: RequestEvent) {
+  // auth
+  if (event.locals.user === null) {
+    return redirect(301, "/login");
   }
-}
+  const params = event.params;
 
-export async function GET({ params }: Params) {
   const pattern = await db
     .select()
     .from(promptPatterns)
-    .where(eq(promptPatterns.id, parseInt(params.id, 10)))
+    .where(eq(promptPatterns.id, parseInt(params.id!, 10)))
     .get();
 
   if (!pattern) {

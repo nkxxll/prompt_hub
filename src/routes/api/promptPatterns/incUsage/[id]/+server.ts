@@ -1,9 +1,14 @@
 import { db } from "$lib/server/db";
 import { promptPatterns } from "$lib/server/db/schema";
-import { fail, json, type RequestEvent } from "@sveltejs/kit";
+import { redirect, fail, json, type RequestEvent } from "@sveltejs/kit";
 import { eq, sql } from "drizzle-orm";
 
 export async function PATCH(event: RequestEvent) {
+  // auth
+  if (event.locals.user === null) {
+    return redirect(301, "/login");
+  }
+
   const params = event.params;
 
   if (!params.id) {

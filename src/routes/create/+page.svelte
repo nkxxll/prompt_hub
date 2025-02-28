@@ -2,8 +2,8 @@
   import { goto } from "$app/navigation";
   import { llmWebsites, promptCategories } from "$lib";
 
-  // test
-  const userId = 1;
+  const { data } = $props();
+  const userId = data.user.id;
 
   function navHome() {
     goto("/");

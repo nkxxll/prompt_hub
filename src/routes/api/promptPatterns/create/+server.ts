@@ -1,10 +1,15 @@
 import { db } from "$lib/server/db";
 import { promptPatterns } from "$lib/server/db/schema";
-import { json, type RequestEvent } from "@sveltejs/kit";
+import { redirect, json, type RequestEvent } from "@sveltejs/kit";
 
 type PromptPattern = typeof promptPatterns.$inferInsert;
 
 export async function POST(event: RequestEvent) {
+  // auth
+  if (event.locals.user === null) {
+    return redirect(301, "/login");
+  }
+
   const request = event.request;
   const pattern: PromptPattern = await request.json();
 

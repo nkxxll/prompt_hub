@@ -1,10 +1,15 @@
 import { db } from "$lib/server/db";
 import { type UpdatePattern } from "$lib/server/prompt";
 import { promptPatterns } from "$lib/server/db/schema";
-import { json, type RequestEvent } from "@sveltejs/kit";
+import { redirect, json, type RequestEvent } from "@sveltejs/kit";
 import { eq } from "drizzle-orm";
 
 export async function PATCH(event: RequestEvent) {
+  // auth
+  if (event.locals.user === null) {
+    return redirect(301, "/login");
+  }
+
   const params = event.params;
   const request = event.request;
   const pattern: UpdatePattern = await request.json();

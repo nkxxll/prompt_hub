@@ -1,7 +1,9 @@
 <script lang="ts">
 	import '../app.css';
   import { PUBLIC_APPLICATION_NAME } from "$env/static/public";
-	let { children } = $props();
+
+	let { data, children } = $props();
+  const user = data.user;
 </script>
 
 <div class="min-h-screen flex flex-col bg-white dark:bg-black text-black dark:text-white">
@@ -14,6 +16,11 @@
         <a href="/create" class="hover:text-gray-400 transition-colors">Create</a>
         <a href="/about" class="hover:text-gray-400 transition-colors">About</a>
         <a href="/contact" class="hover:text-gray-400 transition-colors">Contact</a>
+        {#if user}
+          <p>User ID: { user.username }</p>
+        {:else}
+          <a href="/login">Login/Register</a>
+        {/if}
       </nav>
     </div>
   </header>

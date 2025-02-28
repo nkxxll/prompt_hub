@@ -1,10 +1,15 @@
 /** search with params like name or category or user */
 import { db } from "$lib/server/db";
 import { promptPatterns } from "$lib/server/db/schema";
-import { json, type RequestEvent } from "@sveltejs/kit";
-import { cosineDistance, like } from "drizzle-orm";
+import { redirect, json, type RequestEvent } from "@sveltejs/kit";
+import { like } from "drizzle-orm";
 
 export async function GET(event: RequestEvent) {
+  // auth
+  if (event.locals.user === null) {
+    return redirect(301, "/login");
+  }
+
   const url = event.url;
   const name = url.searchParams.get("name") || "";
   const llmWebsite = url.searchParams.get("llmWebsite") || "";

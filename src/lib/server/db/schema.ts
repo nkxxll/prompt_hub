@@ -9,7 +9,7 @@ export const promptPatterns = sqliteTable("prompt_patterns", {
   category: text("category"), // Category for organization
   usageCount: integer("usage_count").default(0), // Track how often a prompt is used
   public: integer("public", { mode: "boolean" }),
-  userId: integer("user_id").references(() => user.id, { onDelete: "cascade" }), // If multi-user
+  userId: text("user_id").references(() => user.id, { onDelete: "cascade" }), // If multi-user
   createdAt: text("created_at").default("CURRENT_TIMESTAMP").notNull(),
   updatedAt: text("updated_at").default("CURRENT_TIMESTAMP").notNull(),
 });

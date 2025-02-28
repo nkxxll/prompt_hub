@@ -1,12 +1,12 @@
 DELETE FROM user;
 -- Reset auto-increment values
-DELETE FROM sqlite_sequence WHERE name='users';
+DELETE FROM sqlite_sequence WHERE name='user';
 
 -- Insert users
 INSERT INTO user (id, username, password_hash) VALUES
-(1, 'user1', 'password'),
-(2, 'user2', 'password'),
-(3, 'user3', 'password');
+('1', 'user1', 'password'),
+('2', 'user2', 'password'),
+('3', 'user3', 'password');
 
 -- Clear prompt_patterns table
 DELETE FROM prompt_patterns;

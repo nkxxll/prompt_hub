@@ -1,9 +1,14 @@
-import { json, type RequestEvent } from "@sveltejs/kit";
+import { redirect, json, type RequestEvent } from "@sveltejs/kit";
 import { db } from "$lib/server/db";
 import { promptPatterns } from "$lib/server/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function DELETE(event: RequestEvent) {
+  // auth
+  if (event.locals.user === null) {
+    return redirect(301, "/login");
+  }
+
   const params = event.params;
   if (!params.id) {
     return json({ error: "Missing ID" }, { status: 400 });

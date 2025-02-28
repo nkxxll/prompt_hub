@@ -1,13 +1,20 @@
 import { db } from "$lib/server/db";
 import { promptPatterns } from "$lib/server/db/schema";
-import { fail, json, type Actions } from "@sveltejs/kit";
+import { redirect, fail, type Actions } from "@sveltejs/kit";
 import { eq } from "drizzle-orm";
+import type { PageServerLoad } from "./$types";
 
-export const load = async ({ params }: { params: any }) => {
+export const load: PageServerLoad = async (event) => {
+  // auth
+  if (event.locals.user === null) {
+    return redirect(301, "/login");
+  }
+  const params = event.params;
+
   const pattern = await db
     .select()
     .from(promptPatterns)
-    .where(eq(promptPatterns.id, params.slug))
+    .where(eq(promptPatterns.id, parseInt(params.slug!, 10)))
     .get();
   return { pattern };
 };
