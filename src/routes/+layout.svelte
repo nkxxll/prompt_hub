@@ -17,9 +17,9 @@
         <a href="/about" class="hover:text-gray-400 transition-colors">About</a>
         <a href="/contact" class="hover:text-gray-400 transition-colors">Contact</a>
         {#if user}
-          <p>User ID: { user.username }</p>
+          <a href="/profile" class="hover:text-gray-400 transition-colors">Profile</a>
         {:else}
-          <a href="/login">Login/Register</a>
+          <a href="/login">Sign In</a>
         {/if}
       </nav>
     </div>
